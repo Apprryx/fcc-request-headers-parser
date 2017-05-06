@@ -16,6 +16,11 @@ app.route('/')
 	.get(function (req, res) {
 		res.sendFile(path + '/public/index.html');
   });
+app.route('/api/whoami')
+	.get(function (req, res) {
+		var obj = {ipaddress: req.headers['x-forwarded-for'] || req.connection.remoteAddress, language: req.headers["accept-language"].split(',')[0].trim(), software: req.headers['user-agent'].split(/[\(\)]/)[1].trim()};
+		res.json(obj);
+  });
 
 var port = process.env.PORT || 8080;
 app.listen(port,  function () {
